@@ -56,12 +56,12 @@ public class UserController {
     
     
 
-    @GetMapping("/")
+    /*@GetMapping("/")
     public ResponseEntity getAll(){
         try{
             return ResponseEntity.ok(userService.getAll());
         } catch (Exception e){
             return ResponseEntity.badRequest().body("error " + e);
         }
-    }
+    }*/
 }

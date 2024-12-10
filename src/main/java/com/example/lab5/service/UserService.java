@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.lab5.entity.UserEntity;
+import com.example.lab5.entity.LoginEntity;
 import com.example.lab5.exception.UserAlreadyExistException;
 import com.example.lab5.exception.UserNotFoundException;
 import com.example.lab5.repository.UserRepository;
@@ -26,14 +27,25 @@ public class UserService {
         return repository.findAll();
     }
 
-    /*public UserEntity findByUsername(String username){
-
-    }*/
+    public UserEntity findByUsername(String username) throws UserNotFoundException{
+        if (repository.findByUsername(username) == null){
+            throw new UserNotFoundException(username + " not found");
+        }
+        return repository.findByUsername(username);
+    }
 
     public User getById(String id) throws UserNotFoundException{
         if (repository.findById(id).get() == null){
             throw new UserNotFoundException(id + " not found");
         }
         return User.toModel(repository.findById(id).get());
+    }
+
+    public boolean isPasswordCorrect(LoginEntity loginData) throws UserNotFoundException{
+        UserEntity user = repository.findByUsername(loginData.getUsername());
+        if (repository.findByUsername(loginData.getUsername()) == null){
+            throw new UserNotFoundException(loginData.getUsername() + " not found");
+        }
+        return user.getPassword().equals(loginData.getPassword());
     }
 }
