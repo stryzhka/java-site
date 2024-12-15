@@ -17,6 +17,7 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     public UserEntity registration(UserEntity user) throws UserAlreadyExistException{
+        user.setRole("user");
         if (repository.findByUsername(user.getUsername()) != null){
                 throw new UserAlreadyExistException("user already exists");
             }
