@@ -49,4 +49,13 @@ public class UserService {
         }
         return user.getPassword().equals(loginData.getPassword());
     }
+
+    public UserEntity editUser(UserEntity userEntity) throws UserNotFoundException{
+        if (repository.findByUsername(userEntity.getUsername()) == null){
+            throw new UserNotFoundException("user not found");
+        }
+        UserEntity updated = repository.findByUsername(userEntity.getUsername());
+        updated.setRole(userEntity.getRole());
+        return repository.save(updated);
+    }
 }

@@ -66,8 +66,5 @@ public class AuthController {
         return ResponseEntity.ok(userService.findByUsername(principal.getUsername()));
     }
 
-    @GetMapping("/admin")
-    public ResponseEntity admin (@AuthenticationPrincipal UserPrincipal principal){
-        return ResponseEntity.ok("entered as admin");
-    }
+    
 }

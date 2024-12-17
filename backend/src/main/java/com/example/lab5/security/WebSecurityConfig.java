@@ -29,8 +29,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/users/**").permitAll()
-                        .requestMatchers("/admin").hasAuthority("admin")
+                        //.requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("admin")
                         .requestMatchers("/users/register").permitAll()
                         .anyRequest().authenticated()
                 );
