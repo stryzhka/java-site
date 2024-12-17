@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.lab5.entity.UserEntity;
 import com.example.lab5.exception.UserAlreadyExistException;
 import com.example.lab5.exception.UserNotFoundException;
+import com.example.lab5.model.BackendError;
+import com.example.lab5.model.BackendResponse;
 import com.example.lab5.repository.UserRepository;
 import com.example.lab5.service.UserService;
 
@@ -28,11 +30,26 @@ public class UserController {
         //TODO: process POST request
         try{
             userService.registration(user);
-            return ResponseEntity.ok("user saved");
+            return ResponseEntity.ok(
+                BackendResponse
+                .builder()
+                .message("user saved")
+                .build()
+            );
         } catch (UserAlreadyExistException e) {
-            return ResponseEntity.internalServerError().body("failed to create\n" + e.getMessage());
+            return ResponseEntity.internalServerError().body(
+                BackendError
+                .builder()
+                .errorMessage(e.getMessage())
+                .build()
+            );
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("failed to create\n" + e);
+            return ResponseEntity.internalServerError().body(
+                BackendError
+                .builder()
+                .errorMessage(e.getMessage())
+                .build()
+            );
         }    
     }
 
@@ -50,7 +67,12 @@ public class UserController {
         try{
             return ResponseEntity.ok(userService.getById(id));
         } catch (UserNotFoundException e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(
+                BackendError
+                .builder()
+                .errorMessage(e.getMessage())
+                .build()
+            );
         }
     }
     

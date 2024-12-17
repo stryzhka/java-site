@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.lab5.entity.LoginEntity;
 import com.example.lab5.entity.UserEntity;
 import com.example.lab5.exception.UserNotFoundException;
+import com.example.lab5.model.BackendError;
+import com.example.lab5.model.LoginResponse;
 import com.example.lab5.security.JwtIssuer;
 import com.example.lab5.security.UserPrincipal;
 import com.example.lab5.service.UserService;
@@ -36,26 +38,36 @@ public class AuthController {
                 if (userService.isPasswordCorrect(request)){
 
                     var token = jwtIssuer.issue(request.getUsername(), Arrays.asList(user.getRole()));
-                    return ResponseEntity.ok("user: " + user.getId() + "\n" + token);
+                    return ResponseEntity.ok(LoginResponse.builder().accessToken(token).build());
                 }
                 else{
-                    return ResponseEntity.badRequest().body("incorrect password");
+                    return ResponseEntity.badRequest().body(
+                        BackendError
+                        .builder()
+                        .errorMessage("incorrect password")
+                        .build()
+                    );
                 }
         } catch (UserNotFoundException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(
+                BackendError
+                .builder()
+                .errorMessage(e.getMessage())
+                .build()
+            );
         }
         
         
         
     }
 
-    @GetMapping("/secured")
-    public ResponseEntity login (@AuthenticationPrincipal UserPrincipal principal){
-        return ResponseEntity.ok(principal.getUsername());
-    }
+    //@GetMapping("/secured")
+    //public ResponseEntity login (@AuthenticationPrincipal UserPrincipal principal){
+    //    return ResponseEntity.ok(principal.getUsername());
+    //}
 
     @GetMapping("/admin")
     public ResponseEntity admin (@AuthenticationPrincipal UserPrincipal principal){
-        return ResponseEntity.ok("admin");
+        return ResponseEntity.ok("entered as admin");
     }
 }
