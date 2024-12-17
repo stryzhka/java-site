@@ -28,18 +28,18 @@ public class UserService {
         return repository.findAll();
     }
 
-    public UserEntity findByUsername(String username) throws UserNotFoundException{
-        if (repository.findByUsername(username) == null){
-            throw new UserNotFoundException(username + " not found");
-        }
+    public UserEntity findByUsername(String username) {
+        //if (repository.findByUsername(username) == null){
+        //    throw new UserNotFoundException(username + " not found");
+        //}
         return repository.findByUsername(username);
     }
 
-    public User getById(String id) throws UserNotFoundException{
+    public UserEntity getById(String id) throws UserNotFoundException{
         if (repository.findById(id).get() == null){
             throw new UserNotFoundException(id + " not found");
         }
-        return User.toModel(repository.findById(id).get());
+        return repository.findById(id).get();
     }
 
     public boolean isPasswordCorrect(LoginEntity loginData) throws UserNotFoundException{

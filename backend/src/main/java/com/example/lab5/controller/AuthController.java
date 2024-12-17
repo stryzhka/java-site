@@ -61,10 +61,10 @@ public class AuthController {
         
     }
 
-    //@GetMapping("/secured")
-    //public ResponseEntity login (@AuthenticationPrincipal UserPrincipal principal){
-    //    return ResponseEntity.ok(principal.getUsername());
-    //}
+    @GetMapping("/cabinet")
+    public ResponseEntity login (@AuthenticationPrincipal UserPrincipal principal){
+        return ResponseEntity.ok(userService.findByUsername(principal.getUsername()));
+    }
 
     @GetMapping("/admin")
     public ResponseEntity admin (@AuthenticationPrincipal UserPrincipal principal){

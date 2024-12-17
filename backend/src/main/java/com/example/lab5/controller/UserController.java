@@ -62,7 +62,7 @@ public class UserController {
         }
     }*/
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity getById(@RequestParam String id) {
         try{
             return ResponseEntity.ok(userService.getById(id));
@@ -74,7 +74,7 @@ public class UserController {
                 .build()
             );
         }
-    }
+    }*/
     
     
 
