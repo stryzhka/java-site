@@ -31,6 +31,10 @@ public class WebSecurityConfig {
                         .requestMatchers("/auth/login").permitAll()
                         //.requestMatchers("/users/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("admin")
+                        .requestMatchers("/posts/create").hasAuthority("moderator")
+                        .requestMatchers("/posts/edit").hasAuthority("moderator")
+                        .requestMatchers("/posts/**").permitAll()
+                        //.requestMatchers("/posts/**").permitAll()
                         .requestMatchers("/users/register").permitAll()
                         .anyRequest().authenticated()
                 );

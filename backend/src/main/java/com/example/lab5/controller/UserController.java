@@ -13,6 +13,7 @@ import com.example.lab5.model.BackendResponse;
 import com.example.lab5.repository.UserRepository;
 import com.example.lab5.service.UserService;
 
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class UserController {
     @Autowired
     public UserService userService;
     @PostMapping("register")
-    public ResponseEntity registerUser(@RequestBody UserEntity user) {
+    public ResponseEntity registerUser(@RequestBody @Valid UserEntity user) {
         //TODO: process POST request
         try{
             userService.registration(user);
